@@ -31,7 +31,7 @@ const PSG_URL = "https://i.pinimg.com/564x/e9/6c/67/e96c675afa3d76277bf0c26dae20
 const INTER_MILAN_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/1024px-FC_Internazionale_Milano_2021.svg.png?20230515145508";
 
 // This is an array of arrays (Soccer Teams)
-let titles = [
+let teams = [
     ["Real Madrid", "Real Madrid is a professional football club based in Madrid, Spain.", 23, 6, 1],
     ["Arsenal", "Arsenal is a professional football club based in London, England.", 22, 5, 4],
     ["Bayer Leverkusen", "Bayer Leverkusen is a professional football club based in Leverkusen, Germany.", 24, 4, 0],
@@ -48,8 +48,8 @@ function showCards() {
     cardContainer.innerHTML = "";
     const templateCard = document.querySelector(".card");
     
-    for (let i = 0; i < titles.length; i++) {
-        let title = titles[i][0];
+    for (let i = 0; i < teams.length; i++) {
+        let team = teams[i][0];
 
         // This part of the code doesn't scale very well! After you add your
         // own data, you'll need to do something totally different here.
@@ -66,34 +66,34 @@ function showCards() {
         //     imageURL = INTER_MILAN_URL;
         // }
 
-        if (title == "Real Madrid") {
+        if (team == "Real Madrid") {
             imageURL = REAL_MADRID_URL;
-        } else if (title == "Arsenal") {
+        } else if (team == "Arsenal") {
             imageURL = ARSENAL_URL;
-        } else if (title == "Bayer Leverkusen") {
+        } else if (team == "Bayer Leverkusen") {
             imageURL = BAYER_LEVERKUSEN_URL;
-        } else if (title == "PSG") {
+        } else if (team == "PSG") {
             imageURL = PSG_URL;
-        } else if (title == "Inter Milan") {
+        } else if (team == "Inter Milan") {
             imageURL = INTER_MILAN_URL;
         }
 
         const nextCard = templateCard.cloneNode(true); // Copy the template card
-        editCardContent(nextCard, title, imageURL); // Edit title and image
+        editCardContent(nextCard, team, imageURL); // Edit title and image
         cardContainer.appendChild(nextCard); // Add new card to the container
         // cardContainer.insertBefore(nextCard, cardContainer.firstChild); // Add new card to the container
     }
 }
 
-function editCardContent(card, newTitle, newImageURL) {
+function editCardContent(card, newTeam, newImageURL) {
     card.style.display = "block";
 
     const cardHeader = card.querySelector("h2");
-    cardHeader.textContent = newTitle;
+    cardHeader.textContent = newTeam;
 
     const cardImage = card.querySelector("img");
     cardImage.src = newImageURL;
-    cardImage.alt = newTitle + " Poster";
+    cardImage.alt = newTeam + " Poster";
 
     const cardInfo = card.querySelector("li");
     const cardInfo2 = cardInfo.nextElementSibling;
@@ -115,10 +115,10 @@ function editCardContent(card, newTitle, newImageURL) {
     //     cardInfo2.textContent = "Wins: " + titles[4][2] + " Draws: " + titles[4][3] + " Losses: " + titles[4][4];
     // }
 
-    for(let i = 0; i < titles.length; i++) {
-        if (newTitle == titles[i][0]) {
-            cardInfo.textContent = titles[i][1];
-            cardInfo2.textContent = "Wins: " + titles[i][2] + " Draws: " + titles[i][3] + " Losses: " + titles[i][4];
+    for(let i = 0; i < teams.length; i++) {
+        if (newTeam == teams[i][0]) {
+            cardInfo.textContent = teams[i][1];
+            cardInfo2.textContent = "Wins: " + teams[i][2] + " Draws: " + teams[i][3] + " Losses: " + teams[i][4];
         }
     }
     
@@ -126,7 +126,7 @@ function editCardContent(card, newTitle, newImageURL) {
     // You can use console.log to help you debug!
     // View the output by right clicking on your website,
     // select "Inspect", then click on the "Console" tab
-    console.log("new card:", newTitle, "- html: ", card);
+    console.log("new card:", newTeam, "- html: ", card);
 }
 
 // This calls the addCards() function when the page is first loaded
@@ -143,21 +143,21 @@ document.addEventListener("DOMContentLoaded", showCards);
 // }
 
 function sortByWins() {
-    titles.sort(function(a, b) {
+    teams.sort(function(a, b) {
         return b[2] - a[2];
     });
     showCards();
 }
 
 function sortByDraws() {
-    titles.sort(function(a, b) {
+    teams.sort(function(a, b) {
         return b[3] - a[3];
     });
     showCards();
 }
 
 function sortByLosses() {
-    titles.sort(function(a, b) {
+    teams.sort(function(a, b) {
         return b[4] - a[4];
     });
     showCards();
@@ -165,10 +165,9 @@ function sortByLosses() {
 
 function filterByWins() {
     let input = document.getElementById("input").value;
-    titles = titles;
-    let filteredArray = titles.filter(function(team) {
-        return team[2] > input;
+    let filteredArray = teams.filter(function(team) {
+        return team[2] >= input;
     });
-    titles = filteredArray;
+    teams = filteredArray;
     showCards();
 }
