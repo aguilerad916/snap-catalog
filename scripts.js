@@ -164,10 +164,12 @@ function sortByLosses() {
 }
 
 function filterByWins() {
+    let temp = teams;
     let input = document.getElementById("input").value;
     let filteredArray = teams.filter(function(team) {
         return team[2] >= input;
     });
     teams = filteredArray;
     showCards();
+    teams = temp;
 }
